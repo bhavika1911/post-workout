@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 17.6604 17.6604" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow_forward_ios">
+<mask id="mask0_25_1464" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-1" y="-1" width="19" height="19">
+<rect id="Bounding box" x="-0.000221103" y="-0.000221103" width="17.6604" height="17.6604" fill="var(--fill-0, #D9D9D9)"/>
+</mask>
+<g mask="url(#mask0_25_1464)">
+<path id="arrow_forward_ios_2" d="M5.90497 16.1885L4.59884 14.8823L10.6512 8.82997L4.59884 2.77761L5.90497 1.47148L13.2635 8.82997L5.90497 16.1885Z" fill="url(#paint0_linear_25_1464)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_25_1464" x1="8.93115" y1="1.47148" x2="8.93115" y2="16.1885" gradientUnits="userSpaceOnUse">
+<stop stop-color="#75A8E6"/>
+<stop offset="1" stop-color="#5099F1"/>
+</linearGradient>
+</defs>
+</svg>
