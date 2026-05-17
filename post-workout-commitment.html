@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stimuler Design</title>
+  <style>
+@font-face {
+  font-family: 'FONTSPRING DEMO - Integral CF';
+  src: url('IntegralCF-Regular.otf') format('opentype'),
+       url('/IntegralCF-Regular.otf') format('opentype'),
+       url('public/IntegralCF-Regular.otf') format('opentype'),
+       local('FONTSPRING DEMO - Integral CF'),
+       local('FONTSPRING DEMO - Integral CF Regular');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #3d8ceb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: 'DM Sans', sans-serif;
+  overflow: hidden;
+}
+
+.app-container {
+  width: 390px;
+  height: 844px;
+  background: linear-gradient(to bottom, #3d8ceb, #fefefe);
+  position: relative;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: background 0.4s ease;
+}
+
+/* ── Mobile: fill the whole phone screen, no fake mockup ──────────── */
+@media (max-width: 480px) {
+  body {
+    background: linear-gradient(to bottom, #3d8ceb, #fefefe);
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .app-container {
+    width: 100vw !important;
+    height: 100dvh !important;  /* dynamic viewport height = real visible area */
+    height: 100vh !important;   /* fallback for older Safari */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important; /* override JS scale */
+  }
+}
+
+/* Light ray at top */
+.light-ray-top {
+  position: absolute;
+  width: 231px;
+  height: 45px;
+  left: calc(50% + 0.5px);
+  top: 45px;
+  transform: translateX(-50%);
+}
+
+.light-ray-top img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  /* inset: -41.11% -8.01%; */
+  transform: scale(1.5);
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.title {
+  position: absolute;
+  top: 217px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'FONTSPRING DEMO - Integral CF', 'Integral CF', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  color: white;
+  white-space: nowrap;
+  text-shadow: 0px 2px 8px rgba(62,141,235,0.3);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  position: absolute;
+  top: 191px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #c7e0ff;
+  white-space: nowrap;
+}
+
+.session-pills {
+  position: absolute;
+  top: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 349px;
+  height: 40px;
+  background: rgba(255,255,255,0.11);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pill-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.pill-content p {
+  font-size: 14px;
+  color: #d8e8fc;
+}
+
+.pill-content .dot {
+  width: 3px;
+  height: 3px;
+}
+
+.session-number {
+  position: absolute;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: #bfdcff;
+  text-transform: uppercase;
+}
+
+.font-normal { font-weight: 400; }
+.font-extrabold { font-weight: 800; }
+
+.message-box {
+  position: absolute;
+  top: 332px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 202px;
+  background-image: linear-gradient(118.901deg, rgba(255, 255, 255, 0.31) 3.3456%, rgba(188, 221, 255, 0.31) 52.178%, rgba(255, 255, 255, 0.31) 95.187%);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.message-content {
+  position: absolute;
+  top: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 295px;
+}
+
+.message-light {
+  font-size: 20px;
+  color: #5273a4;
+  width: 243px;
+  line-height: normal;
+}
+
+.message-bold-container {
+  margin-top: 4px;
+}
+
+.message-bold {
+  font-size: 20px;
+  font-weight: 600;
+  background: linear-gradient(to right, #27497d 21.9%, #2a61b5 52.8%, #2b518a 78.2%);
+  -webkit-background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.plan-text {
+  position: absolute;
+  top: 585px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #3d689d;
+  white-space: nowrap;
+}
+
+/* Slider Section */
+.slider-wrapper {
+  position: absolute;
+  top: 661px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 390px;
+  height: 82px;
+}
+
+.glow {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glow.active {
+  opacity: 1;
+}
+
+/* Specific glows based on Figma coordinates relative to top/left of app container */
+.left-glow {
+  left: 10px;
+  top: -15px; /* 646 - 661 */
+  width: 96px;
+  height: 116px;
+}
+.left-glow img {
+  position: absolute;
+  width: 250%;
+  height: 250%;
+  left: -75%;
+  top: -91%;
+  max-width: none;
+}
+
+.middle-glow {
+  left: 120px;
+  top: -55px; /* 606 - 661 */
+  width: 161px;
+  height: 196px;
+}
+.middle-glow img {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: -45%;
+  top: -54%;
+  max-width: none;
+}
+
+.right-glow {
+  position: absolute;
+  left: 250px; /* Aligned over the right thumb (310px) */
+  top: -85px; 
+  width: 207px;
+  height: 252px;
+}
+.right-glow img {
+  position: absolute;
+  top: -34.92%;
+  bottom: -34.92%;
+  left: -42.51%;
+  right: -42.51%;
+  width: 185.02%;
+  height: 169.84%;
+  max-width: none;
+}
+
+.right-flame-glow {
+  position: absolute;
+  left: 280px; /* Shifted slightly right based on user feedback */
+  top: -85px; /* Pushed slightly down based on user feedback */
+  width: 112.86px;
+  height: 163.94px;
+  z-index: 20; /* Placed in front of the track/button */
+}
+.right-flame-glow img {
+  position: absolute;
+  top: -8.99%;
+  bottom: -11.53%;
+  left: -16.75%;
+  right: -12.18%;
+  width: 128.93%;
+  height: 120.52%;
+  max-width: none;
+}
+
+/* Track */
+.slider-track {
+  position: absolute;
+  width: 390px;
+  height: 82px;
+  border-radius: 56px;
+  border: 1px solid #80b5f2;
+  overflow: hidden;
+  background: linear-gradient(to right, #8dbbf1, #bcdaff 48.5%, #8bbaf2);
+  transition: background 0.4s ease;
+}
+
+/* Gradient for 'right' state */
+.slider-track.state-right {
+  background: linear-gradient(90deg, #f9af6f 0%, #fff0bc 48.5%, #f2bb8b 100%);
+}
+
+.slider-track.state-right .slider-thumb {
+  background: transparent;
+  background-image: url('assets/imgFrame2.svg');
+  background-size: cover;
+  border-color: transparent;
+}
+
+.track-inner-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0px 0px 25.2px 0px rgba(255,255,255,0.74);
+  pointer-events: none;
+}
+
+/* Track Texts */
+.track-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.track-text.active {
+  opacity: 1;
+}
+
+.state-left-text {
+  left: 171px; /* calc(50% - 24px) */
+  background: linear-gradient(-90deg, rgba(37,76,123,0.8) 0%, rgba(68,139,225,0.8) 93%);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0px 2px 8.1px rgba(94,156,229,0.5);
+}
+
+.state-right-text {
+  left: 149px;
+  font-size: 20px; /* calc(50% - 46px) */
+  background: linear-gradient(-90deg, rgba(239,152,32,0.8) 0%, rgba(230,84,6,0.8) 93%);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0px 2px 9px rgba(253,100,41,0.5);
+}
+
+/* Middle State Elements */
+.middle-state-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.middle-state-elements.inactive {
+  opacity: 0;
+}
+
+.middle-text-left {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 22px; /* calc(50% - 173px) */
+  font-weight: 600;
+  font-size: 16px;
+  color: #3a5d88;
+  text-shadow: 0px 2px 8.1px rgba(94,156,229,0.5);
+}
+
+.middle-text-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 296px; /* calc(50% + 101px) */
+  font-weight: 600;
+  font-size: 16px;
+  color: #3a5d88;
+  text-shadow: 0px 2px 8.1px rgba(94,156,229,0.5);
+}
+
+.arrows-left, .arrows-right {
+  position: absolute;
+  top: 32px;
+  display: flex;
+}
+
+.arrows-left {
+  left: 105px;
+}
+.arrows-left img {
+  width: 17.66px;
+  height: 17.66px;
+  transform: rotate(180deg) scaleY(-1);
+  margin-left: -7px;
+}
+
+.arrows-right {
+  left: 247px;
+}
+.arrows-right img {
+  width: 17.66px;
+  height: 17.66px;
+  margin-left: -7px;
+}
+
+/* Thumb */
+.slider-thumb {
+  position: absolute;
+  left: 155px; /* Middle */
+  top: -1px;
+  width: 80px;
+  height: 80px;
+  background: #5fa9ff;
+  border-radius: 51px;
+  border: 1px solid rgba(252,117,52,0.1);
+  cursor: grab;
+  /* transition: left 0.3s ease; - handled in JS when not dragging */
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* NO overflow:hidden — let the blurred glow bleed naturally outside bounds */
+}
+
+/* Warm-to-cool animated glow behind the thumb:
+   --thumb-glow-opacity: 0→1 (warm) controlled by JS via progress */
+.slider-thumb::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 51px;
+  background: radial-gradient(circle at center, 
+    rgba(253,142,61, var(--thumb-warm-opacity, 1)) 0%, 
+    rgba(253,142,61, var(--thumb-warm-opacity, 1)) 50.962%, 
+    rgba(214,147,109,var(--thumb-warm-opacity, 1)) 68.029%, 
+    rgba(174,151,157,1) 85.096%, 
+    rgba(134,158,208,1) 100%
+  );
+  filter: blur(9.85px);
+  pointer-events: none;
+  transition: background 0.1s linear;
+}
+
+.slider-thumb:active {
+  cursor: grabbing;
+}
+
+.slider-thumb.animate {
+  transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.thumb-icon {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.thumb-icon img {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.thumb-icon img.active {
+  opacity: 1;
+}
+
+#thumbImgMiddle {
+  width: 104.65px;
+  height: 146.25px;
+  left: -11.9px;
+  top: -54.15px;
+}
+
+#thumbImgLeft {
+  width: 37.78px;
+  height: 63.42px;
+  left: 21px;
+  top: 8px;
+}
+
+#thumbImgRight {
+  display: none !important; /* The right state flame is fully baked into imgFrame2.svg */
+}
+
+
+.screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(to bottom, #3d8ceb, #fefefe);
+  border-radius: 32px;
+  z-index: 100;
+}
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 101;
+}
+
+#screen1 {
+  background: transparent;
+}
+
+/* Screen 2 — THAT'S THE SPIRIT (Show Up celebration) */
+#screen2 {
+  background-image: linear-gradient(to bottom, #3d8ceb, #fefefe);
+  border-radius: 32px;
+}
+
+/* Screen 3 — THAT FEELING IS NORMAL (Skip It redirect) */
+#screen3 {
+  background-image: linear-gradient(to bottom, #3d8ceb, #fefefe);
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 60px 16px 44px;
+  gap: 0;
+}
+
+/* Header block */
+.s3-header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.s3-title {
+  font-family: 'FONTSPRING DEMO - Integral CF', 'Integral CF', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  color: white;
+  text-shadow: 0px 2px 8px rgba(62,141,235,0.3);
+  text-transform: uppercase;
+  line-height: 1.15;
+  width: 100%;
+}
+
+.s3-soreness-box {
+  height: 140px;
+  background-image: linear-gradient(128.5deg, rgba(255,255,255,0.51) 3.3%, rgba(188,221,255,0.51) 52.2%, rgba(255,255,255,0.51) 95.2%);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s3-soreness-box p {
+  font-size: 20px;
+  color: #5273a4;
+  text-align: center;
+  width: 315px;
+  line-height: 1.4;
+}
+
+/* Body block */
+.s3-body {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.s3-recovery-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.s3-recovery-text {
+  font-size: 20px;
+  font-weight: 600;
+  background: linear-gradient(to right, #27497d 21.9%, #2a61b5 52.8%, #2b518a 78.2%);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+  width: 316px;
+  line-height: 1.4;
+}
+
+.s3-image-block {
+  width: 316px;
+  height: 171px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #bbb;
+  position: relative;
+}
+
+.s3-image-block img {
+  position: absolute;
+  width: 348px;
+  height: 232px;
+  left: -32px;
+  top: -31px;
+  object-fit: cover;
+  max-width: none;
+}
+
+/* CTA buttons */
+.s3-cta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.s3-btn {
+  height: 57px;
+  border-radius: 56px;
+  border: 1px solid #80b5f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #3a5d88;
+  text-shadow: 0px 2px 8.1px rgba(94,156,229,0.5);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.s3-btn:hover  { opacity: 0.85; transform: scale(0.99); }
+.s3-btn:active { opacity: 0.7;  transform: scale(0.97); }
+
+.s3-btn-primary {
+  background: linear-gradient(to right, #8dbbf1, #bcdaff 48.6%, #8bbaf2);
+}
+
+.s3-btn-secondary {
+  background: linear-gradient(to right, rgba(141,187,241,0.16), rgba(188,218,255,0.16) 48.6%, rgba(139,186,242,0.16));
+}
+
+.s3-back-btn {
+  text-align: center;
+  font-size: 14px;
+  color: #7a8fa8;
+  cursor: pointer;
+  padding: 12px;
+  opacity: 0.7;
+}
+.s3-back-btn:hover { opacity: 1; }
+
+.confetti-container {
+  position: absolute;
+  top: 94px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 292px;
+}
+
+.confetti {
+  position: absolute;
+}
+.c0 { left: 80%; top: 22%; }
+.c1 { left: 47%; top: 21%; width: 44px; height: 52px; transform: rotate(-49deg); }
+.c2 { left: 12%; top: 67%; width: 99px; }
+.c3 { left: 16%; top: 47%; width: 94px; height: 5px; transform: rotate(94deg); }
+.c4 { left: 37%; top: 20%; width: 73px; height: 39px; transform: rotate(-25deg); }
+.c5 { left: 55%; top: 21%; width: 79px; height: 15px; transform: rotate(12deg); }
+.c6 { left: 16%; top: 60%; width: 88px; height: 18px; transform: rotate(170deg); }
+.c7 { left: 37%; top: 29%; width: 29px; height: 61px; transform: rotate(-62deg); }
+.c8 { left: 67%; top: 31%; width: 76px; height: 36px; transform: rotate(23deg); }
+.c9 { left: 81%; top: 68%; width: 86px; height: 8px; transform: rotate(-173deg); }
+.c10 { left: 78%; top: 37%; }
+.c11 { left: 36%; top: 12%; }
+.c12 { left: 73%; top: 47%; }
+.c13 { left: 64%; top: 14%; }
+.c14 { left: 54%; top: 12%; }
+.c15 { left: 27%; top: 26%; }
+.c16 { left: 26%; top: 57%; }
+.c17 { left: 50%; top: 40%; width: 110px; height: 164px; }
+
+.title-spirit {
+  position: absolute;
+  top: 223px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'FONTSPRING DEMO - Integral CF', 'Integral CF', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  color: white;
+  white-space: nowrap;
+  z-index: 10;
+  text-transform: uppercase;
+  text-shadow: 0px 2px 8px rgba(62,141,235,0.3);
+}
+
+.reminder-section {
+  position: absolute;
+  top: 480px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.reminder-text {
+  font-size: 20px;
+  color: #5273a4;
+  margin-bottom: 22px;
+}
+
+.tap-text {
+  font-size: 24px;
+  font-weight: 600;
+  background: linear-gradient(to right, #27497d 21.9%, #2a61b5 52.8%, #2b518a 78.2%);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 32px;
+}
+
+.record-btn-container {
+  width: 94px;
+  height: 94px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.record-btn-container:hover {
+  transform: scale(1.05);
+}
+
+.record-btn {
+  width: 100%;
+  height: 100%;
+}
+
+.skip-btn {
+  font-size: 16px;
+  color: #555e75;
+  cursor: pointer;
+}
+
+.go-back-btn {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: #555e75;
+  cursor: pointer;
+}
+
+
+.flame-container {
+  position: absolute;
+  top: -1px; /* Align with thumb top */
+  left: 155px; /* Initial middle position */
+  width: 80px;
+  height: 80px;
+  z-index: 15; /* On top of track */
+  pointer-events: none; /* Let clicks pass through to thumb */
+}
+.flame-container.animate {
+  transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.flame-container img {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* ====================================================
+   Flame — exact Figma SVG frames, precisely placed
+   Flame viewBox = 104.64 × 131.23 (from SVG source)
+   Thumb = 80px × 80px circle
+   ==================================================== */
+
+/* Outer scale wrapper — JS sets --flame-scale live during drag */
+.flame-frame-wrap {
+  position: absolute;
+  /* Horizontally: (80px thumb − 104px flame) / 2 = −12px */
+  left: -12px;
+  /* Vertically: Align base of flame exactly to bottom of button/track */
+  bottom: -1px;
+  width: 104px;
+  height: 131px;
+  pointer-events: none;
+  z-index: 20;
+  transform-origin: center bottom;
+  /* Scale is driven by JS via --flame-scale. Transition only during snap. */
+  transform: scale(var(--flame-scale, 0.85));
+}
+/* Smooth snap transitions (class added on drag release, removed on drag start) */
+.flame-frame-wrap.flame-animate {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Inner breathing wrapper — CSS-only gentle sway, speed controlled via --flame-breath-duration */
+.flame-breath {
+  width: 100%;
+  height: 100%;
+  transform-origin: center bottom;
+  animation: flameBreath var(--flame-breath-duration, 2.2s) ease-in-out infinite;
+}
+@keyframes flameBreath {
+  0%   { transform: translateY(0px)  rotate(0deg)    scaleX(1);    }
+  30%  { transform: translateY(-5px) rotate(-1.5deg) scaleX(0.96); }
+  65%  { transform: translateY(-2px) rotate(1.2deg)  scaleX(1.03); }
+  100% { transform: translateY(0px)  rotate(0deg)    scaleX(1);    }
+}
+
+/* Each frame image */
+.flame-frame-wrap .ff {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  opacity: 0;
+  /* NO TRANSITION: hard cuts prevent double image and blinking glitches at high cycle speed */
+}
+.flame-frame-wrap .ff.ff-on {
+  opacity: 1;
+}
+
+/* ── Mobile responsiveness for smaller screen heights ──────────────── */
+@media (max-width: 480px) and (max-height: 830px) {
+  /* Screen 1 */
+  .session-number { top: 55px; }
+  .session-pills { top: 80px; }
+  .subtitle { top: 165px; }
+  .title { top: 190px; }
+  .message-box { top: 295px; }
+  .plan-text { top: 515px; }
+  .slider-wrapper { top: 590px; }
+
+  /* Screen 2 */
+  .title-spirit { top: 180px; }
+  .reminder-section { top: 400px; }
+  .go-back-btn { bottom: 30px; }
+
+  /* Screen 3 */
+  #screen3 { justify-content: flex-start; padding: 36px 16px 24px; }
+  .s3-header { margin-bottom: 16px; gap: 16px; }
+  .s3-body { gap: 16px; }
+  .s3-soreness-box { height: 120px; }
+  .s3-image-block { height: 150px; }
+  .s3-image-block img { top: -41px; }
+}
+
+@media (max-width: 480px) and (max-height: 720px) {
+  /* Screen 1 */
+  .session-number { top: 35px; }
+  .session-pills { top: 58px; }
+  .subtitle { top: 130px; }
+  .title { top: 152px; }
+  .message-box { top: 235px; height: 190px; }
+  .plan-text { top: 450px; }
+  .slider-wrapper { top: 520px; }
+
+  /* Screen 2 */
+  .title-spirit { top: 140px; }
+  .reminder-section { top: 320px; }
+  .go-back-btn { bottom: 20px; }
+
+  /* Screen 3 */
+  #screen3 { justify-content: flex-start; padding: 24px 16px 16px; }
+  .s3-header { margin-bottom: 8px; gap: 10px; }
+  .s3-body { gap: 8px; }
+  .s3-soreness-box { height: 100px; }
+  .s3-image-block { height: 120px; }
+  .s3-image-block img { top: -56px; }
+}
+</style>
+  <!-- Integral CF (FONTSPRING DEMO) via cdnfonts -->
+  <link rel="preconnect" href="https://fonts.cdnfonts.com">
+  <link href="https://fonts.cdnfonts.com/css/integral-cf" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container" id="app">
+    <div id="screen1" class="screen active">
+    <div class="light-ray-top">
+      <img src="assets/imgRectangle12.svg" alt="">
+    </div>
+    
+    <div class="header">
+      <p class="session-number"><span class="font-normal">Session</span> <span class="font-extrabold">3</span></p>
+      
+      <div class="session-pills">
+        <div class="pill-content">
+          <p>35 MINS</p>
+          <img src="assets/imgEllipse1.svg" class="dot" alt="">
+          <p>UPPER BODY</p>
+          <img src="assets/imgEllipse1.svg" class="dot" alt="">
+          <p>5 EXERCISE</p>
+          <img src="assets/imgEllipse1.svg" class="dot" alt="">
+          <p>15 SETS</p>
+        </div>
+      </div>
+      
+      <p class="subtitle">Another milestone</p>
+      <h1 class="title">YOU CRUSHED IT</h1>
+    </div>
+
+    <div class="message-box">
+      <div class="message-content">
+        <p class="message-light">Your muscles might feel sore. but it's Important to</p>
+        <div class="message-bold-container">
+          <p class="message-bold">keep the momentum burning!</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="plan-text">What's your plan for tomorrow?</p>
+
+    <!-- Slider Container -->
+    <div class="slider-wrapper">
+      <!-- Glow effects behind track -->
+      <div class="glow left-glow" id="leftGlow">
+        <img src="assets/imgEllipse36.svg" alt="">
+      </div>
+      <div class="glow middle-glow active" id="middleGlow">
+        <img src="assets/imgEllipse35.svg" alt="">
+      </div>
+      <div class="glow right-glow" id="rightGlow">
+        <img src="assets/imgEllipse37.svg" alt="">
+      </div>
+
+      
+      <!-- Flames sitting ON TOP of the track, moving in sync with thumb -->
+      <div class="flame-container" id="flameContainer">
+        <!-- Exact Figma flame frames precisely placed and animated -->
+        <div class="flame-frame-wrap flame-animate" id="flameWrap">
+          <div class="flame-breath">
+            <!-- 26-67 Idle Flame (4 frames) -->
+            <img class="ff ff-on" id="ffi0" src="assets/flame_26_default.svg" alt="">
+            <img class="ff"       id="ffi1" src="assets/flame_26_v2.svg"      alt="">
+            <img class="ff"       id="ffi2" src="assets/flame_26_v3.svg"      alt="">
+            <img class="ff"       id="ffi3" src="assets/flame_26_v4.svg"      alt="">
+          </div>
+        </div>
+
+        <img src="assets/imgGroup34399.svg" alt="" id="thumbImgMiddle" class="active">
+        <img src="assets/imgGroup34404_1.svg" alt="" id="thumbImgLeft">
+        <img src="assets/imgGroup34404.svg" alt="" id="thumbImgRight">
+      </div>
+      <!-- Main Track -->
+      <div class="slider-track" id="sliderTrack">
+        <!-- Text for Left State -->
+        <p class="track-text state-left-text" id="stateLeftText">SKIP IT</p>
+        
+        <!-- Text for Right State -->
+        <p class="track-text state-right-text" id="stateRightText">SHOW UP</p>
+
+        <!-- Middle State Texts and Arrows -->
+        <div class="middle-state-elements" id="middleStateElements">
+          <p class="middle-text-left">SKIP IT</p>
+          <div class="arrows-left">
+            <img src="assets/imgArrowForwardIos2.svg" alt="">
+            <img src="assets/imgArrowForwardIos1.svg" alt="">
+            <img src="assets/imgArrowForwardIos.svg" alt="">
+          </div>
+          
+          <div class="arrows-right">
+            <img src="assets/imgArrowForwardIos.svg" alt="">
+            <img src="assets/imgArrowForwardIos1.svg" alt="">
+            <img src="assets/imgArrowForwardIos2.svg" alt="">
+          </div>
+          <p class="middle-text-right">SHOW UP</p>
+        </div>
+
+        <!-- Inner Shadow Overlay -->
+        <div class="track-inner-shadow"></div>
+
+        <!-- Thumb -->
+        <div class="slider-thumb" id="sliderThumb">
+          
+        </div>
+      </div>
+    </div>
+
+    </div>
+  
+  <div id="screen2" class="screen">
+    <!-- Confetti canvas — fired by JS when this screen activates -->
+    <canvas id="confettiCanvas" style="
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    "></canvas>
+    <p class="title-spirit">THATS THE SPIRIT</p>
+    
+    <div class="reminder-section">
+      <p class="reminder-text">A reminder for tomorrow-you?</p>
+      <p class="tap-text">Tap to speak & record</p>
+      <div class="record-btn-container" onclick="alert('Recording started...')">
+        <img src="assets/record_btn.svg" alt="Record" class="record-btn">
+      </div>
+      <p class="skip-btn" onclick="location.reload()">Skip</p>
+    </div>
+
+    <p class="go-back-btn" onclick="location.reload()">GO BACK TO HOME</p>
+  </div>
+
+  <!-- Screen 3: Skip It → THAT FEELING IS NORMAL -->
+  <div id="screen3" class="screen">
+    <div class="s3-header">
+      <p class="s3-title">That feeling<br>is normal</p>
+      <div class="s3-soreness-box">
+        <p>The soreness usually peaks in 24–72 hours and fades in a few days.</p>
+      </div>
+    </div>
+
+    <div class="s3-body">
+      <div class="s3-recovery-block">
+        <p class="s3-recovery-text">We've curated a light recovery session to help you through it.</p>
+        <div class="s3-image-block">
+          <img src="assets/7d52c87ab8cc719456631878052c8ca68e252b71.png" alt="Recovery session">
+        </div>
+      </div>
+
+      <div class="s3-cta-block">
+        <div class="s3-btn s3-btn-primary" onclick="location.reload()">
+          I will show up
+        </div>
+        <div class="s3-btn s3-btn-secondary" onclick="alert('More details coming soon!')">
+          Know more about the plan
+        </div>
+        <p class="s3-back-btn" onclick="location.reload()">Go back</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- canvas-confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.getElementById('sliderTrack');
+  const thumb = document.getElementById('sliderThumb');
+  const flameContainer = document.getElementById('flameContainer');
+  const middleElements = document.getElementById('middleStateElements');
+  
+  // Texts
+  const leftText = document.getElementById('stateLeftText');
+  const rightText = document.getElementById('stateRightText');
+  
+  // Glows
+  const leftGlow = document.getElementById('leftGlow');
+  const middleGlow = document.getElementById('middleGlow');
+  const rightGlow = document.getElementById('rightGlow');
+  const rightFlameGlow = document.getElementById('rightFlameGlow');
+  
+  // Thumb Images
+  const imgMiddle = document.getElementById('thumbImgMiddle');
+  const imgLeft = document.getElementById('thumbImgLeft');
+  const imgRight = document.getElementById('thumbImgRight');
+
+  let isDragging = false;
+  let startX = 0;
+  let currentLeft = 155; // start at middle
+  const maxLeft = 310;
+  const middleLeft = 155;
+
+  const setUIState = (state) => {
+    // Reset classes
+    leftText.classList.remove('active');
+    rightText.classList.remove('active');
+    middleElements.classList.add('inactive');
+    
+    leftGlow.classList.remove('active');
+    middleGlow.classList.remove('active');
+    rightGlow.classList.remove('active');
+    // rightFlameGlow is now removed from DOM and embedded in dynamicFlame
+    
+    imgLeft.classList.remove('active');
+    imgMiddle.classList.remove('active');
+    imgRight.classList.remove('active');
+    
+    track.classList.remove('state-right');
+
+    clearTimeout(window.transitionTimeout);
+    document.querySelector('.slider-wrapper').classList.remove('state-right');
+    const flW = document.getElementById('flameWrap');
+    if (state === 'LEFT') {
+      document.querySelector('.slider-wrapper').style.setProperty('--drag-progress', 0);
+      flW.style.setProperty('--flame-scale', '0.38');
+      // Thumb goes fully cool-blue (warm opacity = 0)
+      thumb.style.setProperty('--thumb-warm-opacity', '0');
+      // Flame breath very slow (near-stopped)
+      document.querySelector('.flame-breath').style.animationDuration = '14s';
+      leftText.classList.add('active');
+      leftGlow.classList.add('active');
+      imgLeft.classList.add('active');
+      // Transition to Skip It screen after 1.5s
+      window.transitionTimeout = setTimeout(() => {
+        document.getElementById('screen1').classList.remove('active');
+        document.getElementById('screen3').classList.add('active');
+      }, 1500);
+    } else if (state === 'RIGHT') {
+      // ── RIGHT: Show Up ─────────────────────────────────────────────────────
+      document.querySelector('.slider-wrapper').style.setProperty('--drag-progress', 1);
+      // Restore normal warm glow and animation speed
+      thumb.style.setProperty('--thumb-warm-opacity', '1');
+      document.querySelector('.flame-breath').style.animationDuration = '2.2s';
+      window.transitionTimeout = setTimeout(() => {
+        document.getElementById('screen1').classList.remove('active');
+        const s2 = document.getElementById('screen2');
+        s2.classList.add('active');
+        fireConfetti();
+      }, 1500);
+      rightText.classList.add('active');
+      rightGlow.classList.add('active');
+      imgRight.classList.add('active');
+      flW.style.setProperty('--flame-scale', '1.6');
+      track.classList.add('state-right');
+      document.querySelector('.slider-wrapper').classList.add('state-right');
+    } else {
+      // ── MIDDLE: Idle ───────────────────────────────────────────────────────
+      document.querySelector('.slider-wrapper').style.setProperty('--drag-progress', 0.5);
+      clearTimeout(window.transitionTimeout);
+      // Restore warm glow and normal animation speed
+      thumb.style.setProperty('--thumb-warm-opacity', '1');
+      document.querySelector('.flame-breath').style.animationDuration = '2.2s';
+      middleElements.classList.remove('inactive');
+      middleGlow.classList.add('active');
+      imgMiddle.classList.add('active');
+      flW.style.setProperty('--flame-scale', '0.85');
+    }
+  };
+
+  const handleStart = (e) => {
+    isDragging = true;
+    startX = (e.clientX || e.touches[0].clientX) - currentLeft;
+    thumb.classList.remove('animate');
+    flameContainer.classList.remove('animate');
+    document.getElementById('flameWrap').classList.remove('flame-animate');
+    e.preventDefault();
+  };
+
+  const handleMove = (e) => {
+    if (!isDragging) return;
+    let clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+    let newLeft = clientX - startX;
+    
+    // Bounds
+    if (newLeft < 0) newLeft = 0;
+    if (newLeft > maxLeft) newLeft = maxLeft;
+    
+    currentLeft = newLeft;
+    thumb.style.left = `${currentLeft}px`;
+    flameContainer.style.left = `${currentLeft}px`;
+
+    // Dynamic Flame Scale: 0.38 (left) → 0.85 (middle) → 1.6 (right)
+    const progress = currentLeft / maxLeft;
+    document.querySelector('.slider-wrapper').style.setProperty('--drag-progress', progress);
+    
+    let flameScale = 0.85;
+    if (progress < 0.5) {
+      flameScale = 0.38 + (progress / 0.5) * (0.85 - 0.38);
+    } else {
+      flameScale = 0.85 + ((progress - 0.5) / 0.5) * (1.6 - 0.85);
+    }
+    document.getElementById('flameWrap').style.setProperty('--flame-scale', flameScale.toFixed(3));
+
+    // Thumb glow warmth: full orange at center/right, fades to cool blue on left
+    const warmOpacity = progress < 0.5 ? (progress / 0.5).toFixed(3) : '1';
+    thumb.style.setProperty('--thumb-warm-opacity', warmOpacity);
+
+    // Flame breath speed: normal at center/right, slows to near-stop on left
+    let breathDuration = 2.2;
+    if (progress < 0.5) {
+      breathDuration = 2.2 + ((0.5 - progress) / 0.5) * (12 - 2.2);
+    }
+    document.querySelector('.flame-breath').style.animationDuration = `${breathDuration.toFixed(1)}s`;
+
+    // Dynamic fade out of middle elements as you drag away from center
+    const distance = Math.abs(currentLeft - middleLeft);
+    const opacity = 1 - (distance / (middleLeft * 0.8));
+    middleElements.style.opacity = Math.max(0, opacity);
+  };
+
+
+  const handleEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    thumb.classList.add('animate');
+    flameContainer.classList.add('animate');
+    document.getElementById('flameWrap').classList.add('flame-animate');
+    middleElements.style.opacity = '';
+
+    // Snap logic
+    if (currentLeft < middleLeft / 2) {
+      currentLeft = 0;
+      setUIState('LEFT');
+    } else if (currentLeft > maxLeft - middleLeft / 2) {
+      currentLeft = maxLeft;
+      setUIState('RIGHT');
+    } else {
+      currentLeft = middleLeft;
+      setUIState('MIDDLE');
+    }
+    
+    thumb.style.left = `${currentLeft}px`; flameContainer.style.left = `${currentLeft}px`;
+  };
+
+  thumb.addEventListener('mousedown', handleStart);
+  document.addEventListener('mousemove', handleMove);
+  document.addEventListener('mouseup', handleEnd);
+
+  thumb.addEventListener('touchstart', handleStart, {passive: false});
+  document.addEventListener('touchmove', handleMove, {passive: false});
+  document.addEventListener('touchend', handleEnd);
+
+  // Initial State Setup
+  setUIState('MIDDLE');
+  thumb.style.left = `${middleLeft}px`;
+
+  // Scale app to fit desktop. On mobile, CSS @media overrides this.
+  const appContainer = document.getElementById('app');
+  function fitToScreen() {
+    if (window.innerWidth <= 480) {
+      appContainer.style.transform = '';
+      return;
+    }
+    const winWidth  = window.innerWidth;
+    const winHeight = window.innerHeight;
+    const scale = Math.min(winWidth / 390, winHeight / 844, 1);
+    appContainer.style.transform = `scale(${scale})`;
+  }
+  window.addEventListener('resize', fitToScreen);
+  fitToScreen();
+
+  // ── Flame Frame Engine ─────────────────────────────────────────────────────
+  // Idle Flame (4 frames, 26-67 specs) - Loops continuously with 100% smooth, glitch-free transitions
+  const idleFrames = [0,1,2,3].map(i => document.getElementById('ffi' + i));
+  let idleIdx = 0;
+
+  function cycleFlame() {
+    const prevIdx = idleIdx;
+    idleIdx = (idleIdx + 1) % idleFrames.length;
+
+    idleFrames[prevIdx].classList.remove('ff-on');
+    idleFrames[idleIdx].classList.add('ff-on');
+
+    setTimeout(cycleFlame, 160);
+  }
+  cycleFlame();
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── Confetti Burst ────────────────────────────────────────────────────────
+  // Fires when screen2 ("THAT'S THE SPIRIT") activates.
+  // Scoped to the confettiCanvas inside the scaled app container.
+  function fireConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas || typeof confetti === 'undefined') return;
+
+    // Size canvas to match its container
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    const myConfetti = confetti.create(canvas, { resize: true });
+
+    // Warm palette: gold, orange, white, peach — matches flame
+    const colors = ['#FFB92E', '#FF4411', '#FAA057', '#FFFFFF', '#FFE6B3', '#FF6B35', '#FFD700'];
+
+    const shared = {
+      particleCount: 60,
+      spread: 70,
+      colors,
+      ticks: 200,
+      gravity: 1.1,
+      scalar: 0.9,
+      drift: 0,
+    };
+
+    // Left cannon
+    myConfetti({ ...shared, origin: { x: 0.1, y: 0.9 }, angle: 65,  particleCount: 50 });
+    // Right cannon
+    myConfetti({ ...shared, origin: { x: 0.9, y: 0.9 }, angle: 115, particleCount: 50 });
+
+    // Delayed center shower
+    setTimeout(() => {
+      myConfetti({ ...shared, origin: { x: 0.5, y: 0.6 }, angle: 90, spread: 120, particleCount: 80 });
+    }, 300);
+  }
+  // ── End Confetti ──────────────────────────────────────────────────────────
+});
+
+</script>
+</body>
+</html>
